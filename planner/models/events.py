@@ -1,22 +1,42 @@
-from pydantic import BaseModel
-from typing import List
+from sqlmodel import JSON, SQLModel, Field, Column
+from typing import List, Optional
 
-class Event(BaseModel):
-    id: int             # id: 자동 생성되는 고유 식별자
-    title: str          # title: 이벤트 타이틀
-    image: str          # image: 이벤트 이미지 배너의 링크
-    description: str    # description: 이벤트 설명
-    tags: List[str]     # tags: 그룹화를 위한 이벤트 태그
-    location: str       # location: 이벤트 위치
 
-    # 샘플 데이터
+class Event(SQLModel, table=True):
+    id: int = Field(default=None, primary_key=True)
+    title: str
+    image: str
+    description: str
+    tags: List[str] = Field(sa_column=Column(JSON))
+    location: str
+
     class Config:
+        arbitrary_types_allowed = True
         schema_extra = {
             "example": {
                 "title": "FastAPI Book Launch",
                 "image": "https://linktomyimage.com/image.png",
-                "description": "We will be discussing the contents of the FastAPI book in this event. Ensure to come with your own copy to win gifts!",
-                "tags": ["python", "fastapi", "book", "launch"],
+                "description": "test test!",
+                "tags": ["python", "fastapi"],
                 "location": "Google Meet"
+            }
+        }
+
+
+class EventUpdate(SQLModel):
+    title: Optional[str]
+    image: Optional[str]
+    description: Optional[str]
+    tags: Optional[List[str]]
+    location: Optional[str]
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "title": "Update Book Launch",
+                "image": "https://linktomyimage.com/image.png",
+                "description": "test test2222!",
+                "tags": ["sonsazang"],
+                "location": "instagram"
             }
         }
