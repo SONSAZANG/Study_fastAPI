@@ -1,7 +1,8 @@
+from beanie import Document
+from typing import Optional, List
 from pydantic import BaseModel
-from typing import List
 
-class Event(BaseModel):
+class Event(Document):
     id: int             # id: 자동 생성되는 고유 식별자
     title: str          # title: 이벤트 타이틀
     image: str          # image: 이벤트 이미지 배너의 링크
@@ -17,6 +18,27 @@ class Event(BaseModel):
                 "image": "https://linktomyimage.com/image.png",
                 "description": "We will be discussing the contents of the FastAPI book in this event. Ensure to come with your own copy to win gifts!",
                 "tags": ["python", "fastapi", "book", "launch"],
+                "location": "Google Meet"
+            }
+        }
+    
+    class Settings:
+        name = "events"
+
+class EventUpdate(BaseModel):
+    title: Optional[str]
+    image: Optional[str]
+    descriprion: Optional[str]
+    tags: Optional[List[str]]
+    location: Optional[str]
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "title": "FastAPI Book Launch",
+                "image": "https://linktomyimage.com/image.png",
+                "description": "sonsonsonszang",
+                "tags": ["sonsazang", "sonshark"],
                 "location": "Google Meet"
             }
         }

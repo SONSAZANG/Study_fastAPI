@@ -1,10 +1,10 @@
 # 사용자 모델
-
+from beanie import Document, Link
 from pydantic import BaseModel, EmailStr
 from typing import Optional, List
 from models.events import Event
 
-class User(BaseModel):
+class User(Document):
     email: EmailStr                 # email: 사용자 이메일
     password: str                   # password: 사용자 패스워드
     events: Optional[List[Event]]   # events: 해당 사용자가 생성한 이벤트, 처음에는 비어 있다.
@@ -18,6 +18,8 @@ class User(BaseModel):
                 "events": [],
             }
         }
+    class Settings:
+        name = "users"
 
 class UserSignIn(BaseModel):
     email: EmailStr
