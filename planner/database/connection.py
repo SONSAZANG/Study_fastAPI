@@ -9,7 +9,8 @@ from models.events import Event
 
 class Settings(BaseSettings):
     DATABASE_URL: Optional[str] = None
-    DATABASE_NAME: Optional[str] = "mydatabase"  # 데이터베이스 이름 추가
+    DATABASE_NAME: Optional[str] = "user"  # 데이터베이스 이름 추가
+    SECRET_KEY: Optional[str] = None
 
     async def initialize_database(self):
         client = AsyncIOMotorClient(self.DATABASE_URL)
