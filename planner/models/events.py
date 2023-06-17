@@ -3,7 +3,8 @@ from typing import Optional, List
 from pydantic import BaseModel
 
 class Event(Document):
-    id: int             # id: 자동 생성되는 고유 식별자
+    id: int             # id: 자동 생성되는 고유 식별자\
+    creator: Optional[str]
     title: str          # title: 이벤트 타이틀
     image: str          # image: 이벤트 이미지 배너의 링크
     description: str    # description: 이벤트 설명
