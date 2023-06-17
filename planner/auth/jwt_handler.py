@@ -6,7 +6,7 @@ from fastapi import HTTPException, status
 from jose import jwt, JWTError
 from database.connection import Settings
 
-Settings = Settings()
+settings = Settings()
 
 # 토큰 생성 함수
 # 문자열 하나를 받은 후 payload 딕셔너리에 전달
@@ -22,13 +22,13 @@ def create_access_token(user: str):
     # 페이로드: 값이 저장된 딕셔너리, 인코딩할 대상이다
     # 키: 페이로드를 사인하기 위한 키
     # 알고리즘: 페이로드를 사인 및 암호화하는 알고리즘, 기본값인 HS256 알고리즘이 가장 많이 사용된다.
-    token = jwt.encode(payload, Settings.SECRET_KEY, algorithm="HS256")
+    token = jwt.encode(payload, settings.SECRET_KEY, algorithm="HS256")
     return token
 
 # 애플리케이션에 전달된 토큰을 검증하는 함수
 def verify_access_token(token: str):
     try:
-        data = jwt.decode(token, Settings.SECRET_KEY, algorithms=["HS256"])
+        data = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
         expire = data.get("expires")
 
         # 토큰의 만료 시간이 존재하는지 여부 확인

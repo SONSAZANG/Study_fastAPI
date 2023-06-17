@@ -18,7 +18,7 @@ class Settings(BaseSettings):
                           document_models=[Event, User])
 
     class Config:
-        evn_file = ".env"
+        env_file = ".env"
 
 
 class Database:
